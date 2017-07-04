@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SortOrderViewController">
+            <connections>
+                <outlet property="NODataView" destination="XZD-45-2ga" id="8oj-IW-lHp"/>
+                <outlet property="tableViewSort" destination="1G9-b1-PKo" id="dRT-lV-lXS"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1G9-b1-PKo">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XZD-45-2ga">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="1G9-b1-PKo" secondAttribute="bottom" id="4De-SA-O6v"/>
+                <constraint firstItem="XZD-45-2ga" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="5Fk-qR-Ua2"/>
+                <constraint firstItem="1G9-b1-PKo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KKt-iR-VJt"/>
+                <constraint firstAttribute="trailing" secondItem="XZD-45-2ga" secondAttribute="trailing" id="PXQ-Bz-NK2"/>
+                <constraint firstAttribute="trailing" secondItem="1G9-b1-PKo" secondAttribute="trailing" id="XWH-QR-WCc"/>
+                <constraint firstItem="XZD-45-2ga" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="p8O-zV-MHg"/>
+                <constraint firstAttribute="bottom" secondItem="XZD-45-2ga" secondAttribute="bottom" id="wPI-H7-EOk"/>
+                <constraint firstItem="1G9-b1-PKo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="z3C-63-eOd"/>
+            </constraints>
+            <point key="canvasLocation" x="-288" y="41"/>
+        </view>
+    </objects>
+</document>

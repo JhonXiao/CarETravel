@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>99999</key>
+	<string>成功处理</string>
+	<key>-10000</key>
+	<string>密码不正确</string>
+	<key>-10001</key>
+	<string>查询不到订单</string>
+	<key>-10002</key>
+	<string>没有这个储物柜在指定机柜上</string>
+	<key>-10003</key>
+	<string>查询不到机柜属性</string>
+	<key>-10004</key>
+	<string>已经扣过费</string>
+	<key>-10005</key>
+	<string>储物柜不能被占用</string>
+	<key>-10006</key>
+	<string>不正常的LOGINID</string>
+	<key>-10007</key>
+	<string>当前订单状态不正确</string>
+	<key>-10008</key>
+	<string>未知的用户类型</string>
+	<key>-10009</key>
+	<string>机柜下线</string>
+	<key>-10010</key>
+	<string>指定的机柜ID不存在</string>
+	<key>-10011</key>
+	<string>所有储物柜都不可用</string>
+	<key>-10012</key>
+	<string>获取订单号失败</string>
+	<key>-10013</key>
+	<string>错误的用户类型</string>
+	<key>-10014</key>
+	<string>余额不足</string>
+	<key>-10015</key>
+	<string>订单未支付</string>
+	<key>-10016</key>
+	<string>已委托，等待服务中</string>
+	<key>-10017</key>
+	<string>服务中，请等待服务完成</string>
+	<key>-10018</key>
+	<string>服务已完成</string>
+	<key>-10019</key>
+	<string>更新数据失败</string>
+	<key>-10020</key>
+	<string>此状态扫描无效</string>
+	<key>-10021</key>
+	<string>机柜不匹配</string>
+	<key>-10022</key>
+	<string>数据查询失败</string>
+	<key>-10023</key>
+	<string>请先完善客户资料</string>
+	<key>-10024</key>
+	<string>输入的数据不合法</string>
+	<key>-10025</key>
+	<string>原密码不对</string>
+</dict>
+</plist>

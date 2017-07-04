@@ -1,0 +1,576 @@
+package com.freeman.etravel.protobuf;
+
+option java_package = "com.freeman.etravel.protobuf";
+option java_outer_classname = "ETravel";
+option optimize_for = LITE_RUNTIME;
+
+
+//还是以前的规则,  string型的不选的话用NULL　int型的不选的话用-1
+//心跳类
+
+//HeartReq 0X00010001, HeartRes 0X00010002
+//心跳请求
+message HeartReq{
+  required string SID = 1;
+}
+//心跳回应
+message HeartRes{
+  required string SID = 1;
+}
+
+//ExChangeKeyReq 0X10010003, ExChangeKeyRes 0X10010004
+//密钥交换请求
+message ExChangeKeyReq
+{
+    required string SID = 1;
+    required string Content = 2;
+}
+//密钥交换应答
+message ExChangeKeyRes
+{
+    required int32 RetCode = 1;
+    required string SID = 2;   
+    required string p = 3;         //计算公共密钥的p值
+    required string g = 4;         //计算公共密钥的g值
+    required string svrpubkey = 5;    //服务端公共密钥   
+}
+
+//ExChangeCheckKeyReq 0X10010005, ExChangeCheckKeyRes 0X10010006
+//加密密钥校验请求
+message ExChangeCheckKeyReq
+{    
+    required string SID = 1;
+    required string pubKey = 2;     //公共密钥
+    required string KeyDigest = 3; //加密密钥摘要  
+}
+//加密密钥校验应答
+message ExChangeCheckKeyRes
+{    
+    required string SID = 1;    
+    required int32  checkResult = 2; //加密密钥比较结果
+}
+
+//客户端类
+//ServeListQueryReq 0X20010001, ServeListQueryRes 0X20010002
+message ServeGroupInfo
+{
+required int32 ServeId = 1;	//服务标识
+required string ServeCode = 2;	//服务代码
+required string ServeName = 3;	//服务名称
+required double Price = 4;	//单价
+required string Desc = 5;	//备注
+required int32   IconIndex  = 6;//客户端按照图标序号去装载相关服务的图标
+}
+
+//服务列表查询请求
+message ServeListQueryReq{
+  required string SID = 1;
+  required int32  LoginId = 2;  
+}
+//服务列表查询响应
+message ServeListQueryRes{
+  required int32 RetCode = 1;
+  required string SID = 2;
+  required int32 LoginId = 3;
+  repeated ServeGroupInfo ServeGroups = 4;
+}
+
+
+//订单类
+
+//UserServeOrderReq 0X20010003, UserServeOrderRes 0X20010004
+//用户服务订购请求
+message UserServeOrderReq{
+  required string   SID = 1;  
+  required int32    LoginId = 2;
+  required int32    ServeId = 3;
+  required double   Price = 4;//价格
+  required double   Discount = 5;//折扣
+  required int32    Quantity = 6;//数量
+  required double   Amount = 7;//金额
+}
+//用户服务订购响应
+message UserServeOrderRes{
+  required int32    RetCode = 1;
+  required string   SID = 2;
+  required int32    LoginId = 3;
+  required int64    OrderId = 4;  
+}
+
+//OrderPaymentReq 0X20010005, 用户订单支付响应 0X20010006
+//用户订单支付请求
+message OrderPaymentReq{
+  required string   SID = 1;  
+  required int32    LoginId = 2;
+  required int64    OrderId = 3;  
+  required double   Amount = 4;//金额
+}
+//用户订单支付响应
+message OrderPaymentRes{
+  required int32    RetCode = 1;
+  required string   SID = 2;  
+}
+
+
+//查询类
+//UserOrderListQueryReq 0X20010007, UserOrderListQueryRes 0X20010008
+message OrderGroupInfo
+{
+required int64 		OrderId = 1;	//订单标识
+required string 	OrderNum = 2;	//订单编号
+required int32 		ServeId = 3;	//服务标识
+required string 	ServeNum = 4;	//服务编号
+required string 	ServeName = 5;	//服务名称
+required double   Price = 6;//价格
+required double   Discount = 7;//折扣
+required int32    Quantity = 8;//数量
+required double   Amount = 9;//金额
+required int32    Status = 10;//状态
+required string   CreateDate = 11;//创建时间
+required string   PaidDate = 12;//支付时间
+required string 	UserBarcode = 13;	//用户二维码
+required string 	UserPickPwd = 14;	//用户取件密码
+required string 	Desc = 15;	//备注
+required int32  GridId        = 16;
+required string GridInfo      = 17;
+}
+
+//用户订单列表查询请求
+message UserOrderListQueryReq
+{
+  required string SID = 1;      // 会话标识
+  required int32 LoginId = 2;   //登录账户ID
+  required int32 Status = 3;    // 订单状态
+}
+//用户订单列表查询响应
+message UserOrderListQueryRes
+{
+  required int32 RetCode = 1;	// 返回码
+  required string SID = 2;	// 会话标识
+  required int32 LoginId = 3;	// 登录账户ID
+  repeated OrderGroupInfo OrderGroups = 4;
+}
+
+
+//OrderBarcodeBindReq 0X20010009, OrderBarcodeBindRes 0X2001000A
+//订单二维码绑定请求
+message OrderBarcodeBindReq
+{
+  required string SID = 1;      // 会话标识
+  required int32 LoginId = 2;   // 登录账户ID
+  required int64 OrderId = 3;   // 订单标识
+  required string Barcode = 4;  // 二维码
+  required int32 BindType = 5;  // 绑定类型:1--车主;2--候车员
+}
+//订单二维码绑定响应
+message OrderBarcodeBindRes
+{
+  required int32 RetCode = 1;	// 返回码
+  required string SID = 2;	// 会话标识
+  required int32 LoginId = 3;	// 登录账户ID  
+}
+
+
+//OperOrderListQueryReq 0X2001000B, OperOrderListQueryRes 0X2001000C
+
+message TaskGroupInfo
+{
+required int64 		TaskId = 1;	//任务标识
+required int32 		TaskType = 2;	//任务类型
+required int64 		OrderId = 3;	//订单标识
+required string 	OrderNum = 4;	//订单编号
+required int32 		ServeId = 5;	//服务标识
+required string 	ServeNum = 6;	//服务编号
+required string 	ServeName = 7;	//服务名称
+required double   Price = 8;//价格
+required int32    Quantity = 9;//数量
+required double   Discount = 10;//折扣
+required double   Amount = 11;//金额
+required int32    OrderStatus = 12;//订单状态
+required int32    Status = 13;//任务状态
+required string   OrderCreateDate = 14;//订单创建时间
+required string   OrderPaidDate = 15;//订单支付时间
+required string 	OperBarcode = 16;	//候车员二维码
+required string 	OperPickPwd = 17;	//候车员取件密码
+required string   CreateDate = 18;//任务创建时间
+required int32   GridId           = 19;
+required string  GridInfo         = 20;
+required string  Desc             = 21;//备注
+}
+
+//候车员任务列表查询请求
+message OperOrderListQueryReq
+{
+  required string SID = 1;      // 会话标识
+  required int32 LoginId = 2;   //登录账户ID
+  required int32 Status = 3;    // 任务状态
+}
+//候车员任务列表查询响应
+message OperOrderListQueryRes
+{
+  required int32 RetCode = 1;	// 返回码
+  required string SID = 2;	// 会话标识
+  required int32 LoginId = 3;	// 登录账户ID
+  repeated TaskGroupInfo TaskGroups = 4;
+}
+
+
+//服务推送类
+
+//SysBulletin 0X2001000D
+//系统公告
+message SysBulletin
+{
+  required string SID = 1;      // 会话标识
+  required int32 LoginId = 2;   //登录账户ID
+  required int64 BulletinId = 3;   //公告ID
+  required int32 BulletinType = 4;   //公告类型
+  required string Title = 5;      // 标题
+  required string Content = 6;      // 内容
+  required string PublisherName = 7;	// 发布者
+}
+
+/**
+新增注册、充值、用户登录等协议，Add by weixuejun at 2017-3-8
+**/
+
+/**
+标准应答：*0x2001000E，返回成功或者失败，
+如果成功，也可返回必要的信息，放在Msg中
+如果失败，失败信息放在Msg中
+**/
+message StandardRes
+{
+required int32   RetCode       = 1;  // 0-成功， 1-注册失败，具体信息见ErrMsg
+required string  SID           = 2;
+required string  Msg           = 3;  // 错误信息
+}
+
+/*
+请求手机验证码:请求*0x20010011，应答*0x20010012，
+成功时，验证码放在Msg中，同时验证码通过短信发送到手机上
+*/
+message GetValidateCodeReq
+{
+required string SID           = 1;
+required string PhoneNumber   = 2;  //手机号码
+}
+
+/*
+用户注册：请求*0x20010013,应答*0x20010014
+*/
+message UserRegistReq
+{
+required string SID            = 1;
+required string PhoneNumber    = 2; //手机号码
+required string LoginPwd       = 3; //登录密码，至少8位
+required string ValidateCode   = 4; //手机验证码
+}
+
+/*
+客户资料完善：请求*0x20010015，应答*0x20010016
+一个客户下最多可以登记三个车牌
+*/
+message UserInfo
+{
+required string  Name          = 1;   //客户姓名，有姓就可以了
+required int32   Sex           = 2;   //客户性别，非必选，0-不确定 1-先生 2-女士
+required string  CarNo        = 3;   //车牌号码，一个客户下可以有多个车牌号码
+//required string  CarNo2        = 4;   //车牌号码2，一个客户下可以有多个车牌号码
+//required string  CarNo3        = 5;   //车牌号码3，一个客户下可以有多个车牌号码
+//required string  defaultNo     = 6;   //默认的车牌，默认值为1，可以是1，2，3
+required string  ParkSlot      = 4;   //停车位置 , added by wxj 20170425
+optional int32   ParkType   	 = 5[default = 0];   //停车位类型，0-固定，1-临时
+required int32  Cartype        = 6; //汽车型号
+optional string  CarColor       = 7 ; //汽车颜色，让用户自己输入
+optional string  DispCarType    =8;//汽车型号显示信息，例如：奥迪-A4，用户信息完善时，此项不用填；
+}
+
+message UserInfoModReq
+{
+required string   SID         = 1;
+required int32    LoginId     = 2;
+required UserInfo UserInfoId  = 3;
+}
+
+/**
+汽车品牌查询协议  汽车品牌查询请求0x2001002B,汽车品牌查询应答0x2001002C
+**/
+message CarBandInfo
+{
+required int32 BandId      = 1;
+required string BandName  =2;
+required string  Sequ       = 3;//排序字母
+}
+
+message  GetCarBandReq
+{
+required string SID     = 1;
+required int32 LoginId  = 2;
+}
+message GetCarBandRes
+{
+required int32 RetCode     = 1;
+required string SID        = 2;
+required int32  LoginId    = 3;
+repeated CarBandInfo CarBandGroup    = 4;
+}
+
+/**
+汽车型号查询协议，汽车型号查询请求0x2001002D,汽车型号查询应答0x2001002E
+**/
+message CartypeInfo
+{
+required int32 CartypeID    =1;//类型ID
+required string CartypeName =2;//类型名称
+}
+
+message  GetCartypeReq
+{
+required string SID     = 1;
+required int32 LoginId  = 2;
+required int32 CarBand  = 3;  //品牌ID
+}
+message GetCartypeRes
+{
+required int32 RetCode     = 1;
+required string SID        = 2;
+required int32  LoginId    = 3;
+repeated CartypeInfo CartypeGroup    = 4;
+}
+
+/**
+客户资料查询：请求*0x20010017，应答*0x20010018
+**/
+message GetUserInfoReq
+{
+required string    SID         = 1;
+required int32     LoginId     = 2;
+}
+
+message GetUserInfoRes
+{
+required int32    RetCode   = 1;
+required string   SID       = 2;
+required UserInfo UserInfoId  = 3;
+}
+
+/**
+用户登录：请求*0x20010019，应答*0x2001000E，返回LoginID放在Msg中
+**/
+message UserLoginReq
+{
+required int32     SID         = 1;
+required string    PhoneNumber = 2;
+required string    LoginPwd    = 3;
+}
+
+/***
+用户账户余额查询：请求*0x2001001B，应答*0x2001001C
+***/
+message GetUserBalanceReq
+{
+required string     SID         = 1;
+required int32      LoginId     = 2;
+}
+
+message GetUserBalanceRes
+{
+required int32 RetCode   = 1;
+required string  SID       = 2;
+required double balance   = 3;
+}
+
+/**
+用户充值：请求*0x2001001D，应答*0x2001001E(标准应答)
+**/
+message UserChargeReq
+{
+required string     SID         = 1;
+required int32      LoginId     = 2;
+required double     amount      = 3;
+}
+
+/***
+客服信息查询：请求*0x20010023,应答*0x20010024
+***/
+message GetCSInfoReq
+{
+required string SID       = 1;
+required int32  LoginId   = 2;
+}
+
+message GetCSInfoRes
+{
+required int32   RetCode = 1;
+required string  SID     = 2;
+required string  CSInfo  = 3;   //客服信息
+required string  Version = 4;   //APP版本号
+}
+
+/****
+密码修改：请求*0x20010025,应答*0x20010026 标准应答
+****/
+message ChangePasswdReq
+{
+required string SID      = 1;
+required int32  LoginId  = 2;
+required int32  UserType = 3;     // 1-车主 2-候车员
+required string oldpasswd= 4;     //原密码
+required string newpasswd= 5;
+}
+
+/**
+扫码校验请求：请求0x20010027,应答0x20010028
+**/
+message CheckScanCodeReq
+{
+required string SID     = 1;
+required int32 LoginId  = 2;
+required string barcode = 3;
+optional int32 UserType = 4[default=1];
+}
+
+message CheckScanCodeRes
+{
+required int32 RetCode     = 1;
+required string SID        = 2;
+required int32  LoginId    = 3;
+optional int64  OrderId    = 4[default=0]; //如果OrderId = 0 ,则下单，如果>0，则取钥匙;
+optional int32  Status     = 5[default=0]; //返回正确的RetCode的情况下，如果为1，表示存钥匙，如果为6，表示取钥匙；
+}
+
+/**
+取消订单请求0x020010029,取消订单应答0x2001002A
+**/
+message CancelOrderReq
+{
+required string SID       = 1;
+required int32  LoginId   = 2;
+required int64  OrderId   = 3;
+}
+
+message CancelOrderRes
+{
+required int32 RetCode     = 1;
+required string SID        = 2;
+required int32  LogindId   = 3;
+required int32  PayType    = 4; // 0:现金  1：支付宝
+optional string Params     = 5; //退单支付宝参数
+}
+
+//-----------------------------机柜与后台交互协议----------------------------
+/**
+*登录请求*0x30010001,登录应答*0x30010002
+**/
+message LogInReq
+{
+required string SID          = 1;
+required string LoginAccount = 2;
+required string LoginPwd     = 3;
+required int32  UserType     = 4;//1--车主;2--候车员;3--机柜
+}
+
+message LogInRes
+{
+required int32   RetCode  = 1;
+required string  SID      = 2;
+required int32   LoginId  = 3 [default = 0];
+required int32   UserId   = 4 [default = 0];
+required string  UserName = 5 [default = ""];
+}
+
+/**
+*机柜属性查询请求*0x30010003,机柜属性查询应答*0x30010004
+**/
+message GridInfo
+{
+required int32 GridId = 1;
+required int32 Status = 2;
+}
+
+message CabinetAttrQueryReq
+{
+required string SID          = 1;
+required int32  LoginId      = 2;
+}
+
+message CabinetAttrQueryRes
+{
+required int32    RetCode   = 1;
+required string   SID       = 2;
+required int32    LoginId   = 3;
+repeated GridInfo GroupGrid = 4;
+}
+
+/**
+*储物格状态修改请求*0x30010005,储物格状态修改应答*0x30010006
+**/
+message GridStatusUpdReq
+{
+required string SID          = 1;
+required int32  LoginId      = 2;
+required int32  GridId       = 3;
+required int32  Status       = 4;
+}
+
+message GridStatusUpdRes
+{
+required int32   RetCode   = 1;
+required string  SID       = 2;
+required int32   LoginId   = 3;
+}
+
+/**
+*取物密码校验请求*0x30010007,取物密码校验应答*0x30010008
+**/
+message GridPwdValidateReq
+{
+required string SID          = 1;
+required int32  LoginId      = 2;
+required string Pwd          = 3;
+}
+
+message GridPwdValidateRes
+{
+required int32   RetCode   = 1;
+required string  SID       = 2;
+required int32   LoginId   = 3;
+required int32   IsCorrect = 4;
+required int32   CubeId    = 5;
+}
+
+/**
+*存物二维码申请请求*0x30010009,取物密码校验应答*0x3001000A
+**/
+message GridEncodeApplyReq
+{
+required string SID          = 1;
+required int32  LoginId      = 2;
+}
+
+message GridEncodeApplyRes
+{
+required int32   RetCode   = 1;
+required string  SID       = 2;
+required int32   LoginId   = 3;
+required int32   GridId    = 4;
+}
+
+/**
+*通知机柜打开储物柜请求*0x3001000B,通知机柜打开储物柜应答*0x3001000C
+**/
+message CenterCallGridNoticeReq
+{
+required string SID          = 1;
+required int32  LoginId      = 2;
+required int32  GridID       = 3;
+required int32  Status       = 4;
+}
+
+message CenterCallGridNoticeRes
+{
+required int32   RetCode   = 1;
+required string  SID       = 2;
+required int32   LoginId   = 3;
+}

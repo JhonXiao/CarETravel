@@ -1,0 +1,12 @@
+PODS:
+  - protobuf-ios (2.3.2)
+
+DEPENDENCIES:
+  - protobuf-ios
+
+SPEC CHECKSUMS:
+  protobuf-ios: 03d4246f27c34ea055542b344833d4fdb2fa5bba
+
+PODFILE CHECKSUM: 2c47369400c8a23cbb0e63deb335da8dd99195e0
+
+COCOAPODS: 1.2.0
